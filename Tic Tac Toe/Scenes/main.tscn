@@ -1,0 +1,159 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4mbgrdh6qc44"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_iuefd"]
+[ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_pi6ub"]
+[ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="2_txptv"]
+[ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_xlkwq"]
+[ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="5_gwaet"]
+
+[sub_resource type="Shader" id="Shader_rygkd"]
+code = "shader_type canvas_item;
+
+uniform vec4 color : source_color = vec4(1.0);
+uniform float width : hint_range(0, 10) = 1.0;
+uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
+uniform bool inside = false;
+uniform bool add_margins = true; // only useful when inside is false
+uniform vec2 number_of_images = vec2(1.0); // number of horizontal and vertical images in the sprite sheet
+
+void vertex() {
+	if (add_margins) {
+		VERTEX += sign(VERTEX) * width; // replace `sign(VERTEX)` by `sign(VERTEX * 2.0 - 1.0)` if not centered
+	}
+}
+
+bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, vec2 image_top_left, vec2 image_bottom_right, sampler2D texture) {
+	for (float i = -ceil(width); i <= ceil(width); i++) {
+		float x = abs(i) > width ? width * sign(i) : i;
+		float offset;
+
+		if (pattern == 0) {
+			offset = width - abs(x);
+		} else if (pattern == 1) {
+			offset = floor(sqrt(pow(width + 0.5, 2) - x * x));
+		} else if (pattern == 2) {
+			offset = width;
+		}
+
+		for (float j = -ceil(offset); j <= ceil(offset); j++) {
+			float y = abs(j) > offset ? offset * sign(j) : j;
+			vec2 xy = uv + texture_pixel_size * vec2(x, y);
+
+			if ((xy != clamp(xy, image_top_left, image_bottom_right) || texture(texture, xy).a <= 0.0) == inside) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void fragment() {
+	vec2 uv = UV;
+	vec2 image_top_left = floor(uv * number_of_images) / number_of_images;
+	vec2 image_bottom_right = image_top_left + vec2(1.0) / number_of_images;
+
+	if (add_margins) {
+		vec2 texture_pixel_size = vec2(1.0) / (vec2(1.0) / TEXTURE_PIXEL_SIZE + vec2(width * 2.0) * number_of_images);
+
+		uv = (uv - texture_pixel_size * width - image_top_left) * TEXTURE_PIXEL_SIZE / texture_pixel_size + image_top_left;
+
+		if (uv != clamp(uv, image_top_left, image_bottom_right)) {
+			COLOR.a = 0.0;
+		} else {
+			COLOR = texture(TEXTURE, uv);
+		}
+	} else {
+		COLOR = texture(TEXTURE, uv);
+	}
+
+	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
+		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
+		COLOR.a += (1.0 - COLOR.a) * color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jvjy"]
+shader = SubResource("Shader_rygkd")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 10.0
+shader_parameter/pattern = 0
+shader_parameter/inside = true
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20rp2"]
+bg_color = Color(0.388235, 0.643137, 0.858824, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jaqt"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_offset = Vector2(5, 5)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_iuefd")
+circle_scene = ExtResource("2_pi6ub")
+cross_scene = ExtResource("3_xlkwq")
+
+[node name="Board" parent="." instance=ExtResource("2_txptv")]
+material = SubResource("ShaderMaterial_8jvjy")
+position = Vector2(300, 500)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0.466667, 0.831373, 1)
+
+[node name="SidePanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(900, 1080)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -898.0
+offset_top = -540.0
+offset_right = 2.0
+offset_bottom = 540.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_20rp2")
+
+[node name="PlayerLabel" type="Label" parent="."]
+offset_left = 1168.0
+offset_top = 131.0
+offset_right = 1768.0
+offset_bottom = 198.0
+theme_override_font_sizes/font_size = 46
+text = "Next Player: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerPanel" type="Panel" parent="."]
+offset_left = 1360.0
+offset_top = 200.0
+offset_right = 1560.0
+offset_bottom = 400.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6jaqt")
+
+[node name="GameOverMenu" parent="." instance=ExtResource("5_gwaet")]
+process_mode = 2
+visible = false
+
+[connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
