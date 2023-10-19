@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cowd6rbxaf46n"]
 
-[ext_resource type="Texture2D" uid="uid://bwvtmxevri3ql" path="res://Images/grid.png" id="1_bje6v"]
+[ext_resource type="Texture2D" uid="uid://bljqsi3cvugpx" path="res://Images/Tic Tac Plus Grid.png" id="1_lm1ip"]
 
 [node name="Board" type="Sprite2D"]
-texture = ExtResource("1_bje6v")
+texture = ExtResource("1_lm1ip")
