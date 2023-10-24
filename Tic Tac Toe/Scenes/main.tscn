@@ -1,14 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4mbgrdh6qc44"]
+[gd_scene load_steps=10 format=3 uid="uid://c4mbgrdh6qc44"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_iuefd"]
 [ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_pi6ub"]
 [ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="2_txptv"]
 [ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_xlkwq"]
 [ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="5_gwaet"]
-[ext_resource type="Texture2D" uid="uid://is5hmlk5i46g" path="res://Images/TicTacToe Concept In-Game UI.png" id="6_0hq24"]
-
-[sub_resource type="SystemFont" id="SystemFont_jkoax"]
-font_names = PackedStringArray("Mongolian Baiti")
+[ext_resource type="Texture2D" uid="uid://fm2wki5n5yml" path="res://Images/TicTacPLUS Local Play Test UI.png" id="6_bfk2k"]
+[ext_resource type="Shader" path="res://game_over_menu.gdshader" id="7_ew2w0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jaqt"]
 bg_color = Color(1, 1, 1, 0)
@@ -23,6 +21,20 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsd7q"]
+shader = ExtResource("7_ew2w0")
+shader_parameter/res = null
+shader_parameter/mask_type = 0
+shader_parameter/bloom_type = 0
+shader_parameter/hardScan = -8.0
+shader_parameter/hardPix = -2.0
+shader_parameter/hardBloomScan = -2.0
+shader_parameter/hardBloomPix = -1.5
+shader_parameter/bloomAmount = 16.0
+shader_parameter/warp = Vector2(64, 24)
+shader_parameter/maskDark = 0.5
+shader_parameter/maskLight = 1.5
+
 [node name="Main" type="Node"]
 script = ExtResource("1_iuefd")
 circle_scene = ExtResource("2_pi6ub")
@@ -32,35 +44,42 @@ cross_scene = ExtResource("3_xlkwq")
 position = Vector2(540, 540)
 metadata/_edit_lock_ = true
 
-[node name="PlayerLabel" type="Label" parent="."]
-visible = false
-offset_left = 1168.0
-offset_top = 131.0
-offset_right = 1768.0
-offset_bottom = 198.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
-theme_override_fonts/font = SubResource("SystemFont_jkoax")
-theme_override_font_sizes/font_size = 46
-text = "Next Player: "
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="PlayerPanel" type="Panel" parent="."]
 offset_left = 1227.0
 offset_top = 312.0
 offset_right = 1577.0
 offset_bottom = 662.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6jaqt")
+metadata/_edit_lock_ = true
 
 [node name="GameOverMenu" parent="." instance=ExtResource("5_gwaet")]
 process_mode = 2
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(960, 540)
-texture = ExtResource("6_0hq24")
+texture = ExtResource("6_bfk2k")
 metadata/_edit_lock_ = true
+
+[node name="CRT Filter" type="Panel" parent="."]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_bsd7q")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 1389.0
+offset_top = 905.0
+offset_right = 1908.0
+offset_bottom = 1083.0
+theme_override_font_sizes/font_size = 60
+placeholder_text = "sus"
+max_length = 12
 
 [connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]

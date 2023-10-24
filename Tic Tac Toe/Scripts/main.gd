@@ -4,6 +4,7 @@ extends Node
 @export var cross_scene : PackedScene
 
 var player : int
+var player_name : String
 var moves : int
 var winner : int
 var temp_marker
@@ -28,7 +29,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	player_name = $LineEdit.get_text()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -45,14 +46,16 @@ func _input(event):
 					if check_win() != 0:
 						get_tree().paused = true
 						$GameOverMenu.show()
+						$"CRT Filter".show()
 						if winner == 1:
-							$GameOverMenu.get_node("ResultLabel").text = "Player 1 Wins!"
+							$GameOverMenu.get_node("ResultLabel").text = player_name+" Wins!"
 						elif winner == -1:
 							$GameOverMenu.get_node("ResultLabel").text = "Player 2 Wins!"
 					#check if the board has been filled
 					elif moves == 9:
 						get_tree().paused = true
 						$GameOverMenu.show()
+						$"CRT Filter".show()
 						$GameOverMenu.get_node("ResultLabel").text = "It's a Tie!"
 					player *= -1
 					#update the panel marker
@@ -79,6 +82,7 @@ func new_game():
 	#create a marker to show starting player's turn
 	create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
 	$GameOverMenu.hide()
+	$"CRT Filter".hide()
 	get_tree().paused = false
 
 func create_marker(player, position, temp=false):
