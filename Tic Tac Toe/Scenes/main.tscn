@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4mbgrdh6qc44"]
+[gd_scene load_steps=11 format=3 uid="uid://c4mbgrdh6qc44"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_iuefd"]
 [ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_pi6ub"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="5_gwaet"]
 [ext_resource type="Texture2D" uid="uid://fm2wki5n5yml" path="res://Images/TicTacPLUS Local Play Test UI.png" id="6_bfk2k"]
 [ext_resource type="Shader" path="res://game_over_menu.gdshader" id="7_ew2w0"]
+[ext_resource type="PackedScene" uid="uid://b664amh7bkkn" path="res://Scenes/area.tscn" id="8_3ci2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jaqt"]
 bg_color = Color(1, 1, 1, 0)
@@ -81,5 +82,32 @@ offset_bottom = 1083.0
 theme_override_font_sizes/font_size = 60
 placeholder_text = "sus"
 max_length = 12
+
+[node name="Area" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(198, 192)
+
+[node name="Area2" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(540, 193)
+
+[node name="Area3" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(881, 193)
+
+[node name="Area4" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(197, 537)
+
+[node name="Area5" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(542, 536)
+
+[node name="Area6" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(880, 535)
+
+[node name="Area7" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(198, 883)
+
+[node name="Area8" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(541, 883)
+
+[node name="Area9" parent="." instance=ExtResource("8_3ci2t")]
+position = Vector2(881, 881)
 
 [connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
