@@ -3,7 +3,9 @@ extends Node
 @export var circle_scene : PackedScene
 @export var cross_scene : PackedScene
 
+
 var player : int
+var player_1 : bool
 var player_name : String
 var moves : int
 var winner : int
@@ -20,16 +22,21 @@ var diagonal2_sum : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	board_size = $Board.texture.get_width()
+	if $Board:
+		board_size = $Board.texture.get_width()
 	# divide board size by 3 to get the size of individual cell
 	cell_size = board_size / 3
+	if $PlayerPanel:
 	#get coordinates of small panel on right side of window
-	player_panel_pos = $PlayerPanel.get_position()
+		player_panel_pos = $PlayerPanel.get_position()
 	new_game()
+	if player == 1:
+		player_1 = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	player_name = $LineEdit.get_text()
+	if $LineEdit:
+		player_name = $LineEdit.get_text()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -81,8 +88,9 @@ func new_game():
 	get_tree().call_group("crosses", "queue_free")
 	#create a marker to show starting player's turn
 	create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
-	$GameOverMenu.hide()
-	$"CRT Filter".hide()
+	if $GameOverMenu and $"CRT Filter":
+		$GameOverMenu.hide()
+		$"CRT Filter".hide()
 	get_tree().paused = false
 
 func create_marker(player, position, temp=false):
@@ -93,10 +101,11 @@ func create_marker(player, position, temp=false):
 		add_child(circle)
 		if temp: temp_marker = circle
 	else:
-		var cross = cross_scene.instantiate()
-		cross.position = position
-		add_child(cross)
-		if temp: temp_marker = cross
+		if cross_scene:
+			var cross = cross_scene.instantiate()
+			cross.position = position
+			add_child(cross)
+			if temp: temp_marker = cross
 
 func check_win():
 	#add up the markers in each ros, column and diagonal

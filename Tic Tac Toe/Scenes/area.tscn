@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://kfa26n035vg6"]
+
+[ext_resource type="Script" path="res://Scenes/area.gd" id="1_dow47"]
+[ext_resource type="Texture2D" uid="uid://dk0y4tei3v4h5" path="res://Images/Circle Update.png" id="1_h6ffv"]
+[ext_resource type="Texture2D" uid="uid://du5nciyg1ov5x" path="res://Images/Cross Update.png" id="2_idt2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eqb3"]
+size = Vector2(323, 323)
+
+[node name="Area" type="Area2D"]
+script = ExtResource("1_dow47")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6eqb3")
+
+[node name="Circle_Transparent" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.439216)
+texture = ExtResource("1_h6ffv")
+
+[node name="Cross_Transparent" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.301961)
+texture = ExtResource("2_idt2w")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
