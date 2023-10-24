@@ -3,6 +3,8 @@ extends Node
 @export var circle_scene : PackedScene
 @export var cross_scene : PackedScene
 
+signal new_game_started
+signal player_change
 
 var player : int
 var player_1 : bool
@@ -65,12 +67,22 @@ func _input(event):
 						$"CRT Filter".show()
 						$GameOverMenu.get_node("ResultLabel").text = "It's a Tie!"
 					player *= -1
+					emit_signal("player_change")
 					#update the panel marker
 					temp_marker.queue_free()
 					create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
 					print(grid_data)
 
 func new_game():
+	$Area.show()
+	$Area2.show()
+	$Area3.show()
+	$Area4.show()
+	$Area5.show()
+	$Area6.show()
+	$Area7.show()
+	$Area8.show()
+	$Area9.show()
 	player = 1
 	moves = 0
 	winner = 0
@@ -92,6 +104,7 @@ func new_game():
 		$GameOverMenu.hide()
 		$"CRT Filter".hide()
 	get_tree().paused = false
+	emit_signal("new_game_started")
 
 func create_marker(player, position, temp=false):
 	#create a marker node and add it as a child
