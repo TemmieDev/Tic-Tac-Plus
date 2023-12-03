@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://cagvs6js1m2aq"]
+
+[ext_resource type="Script" path="res://Scripts/name_select_menu.gd" id="1_mptcm"]
+[ext_resource type="Texture2D" uid="uid://16avhdpgean7" path="res://Images/PlayerName UI.png" id="2_5eev5"]
+
+[sub_resource type="SystemFont" id="SystemFont_nyn3f"]
+font_names = PackedStringArray("Mongolian Baiti")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7krs"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6npv"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_ibeku"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[node name="NameSelectMenu" type="CanvasLayer"]
+script = ExtResource("1_mptcm")
+
+[node name="PlayerName UI" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("2_5eev5")
+
+[node name="PlayerX" type="LineEdit" parent="."]
+offset_left = 182.0
+offset_top = 602.0
+offset_right = 762.0
+offset_bottom = 798.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_nyn3f")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_a7krs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_j6npv")
+placeholder_text = "Enter Name"
+alignment = 1
+max_length = 12
+
+[node name="PlayerO" type="LineEdit" parent="."]
+offset_left = 1165.0
+offset_top = 600.0
+offset_right = 1745.0
+offset_bottom = 796.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_nyn3f")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_a7krs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_j6npv")
+placeholder_text = "Enter Name"
+alignment = 1
+max_length = 12
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -87.0
+offset_right = 271.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_ibeku")
+theme_override_font_sizes/font_size = 30
+text = "Player names can only go up to 12 characters"
+horizontal_alignment = 1
+vertical_alignment = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d11qqu7mw5sb0"]
+[gd_scene load_steps=12 format=3 uid="uid://d11qqu7mw5sb0"]
 
 [ext_resource type="Script" path="res://Scripts/game_over_menu.gd" id="1_bu5uc"]
 [ext_resource type="Texture2D" uid="uid://bdj0nsr6yoayl" path="res://Images/Win BG.png" id="2_7ox1e"]
@@ -47,19 +47,83 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_63044"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Animation" id="Animation_uv5bg"]
+resource_name = "show"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+
+[sub_resource type="Animation" id="Animation_bxtop"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utohn"]
+_data = {
+"RESET": SubResource("Animation_bxtop"),
+"show": SubResource("Animation_uv5bg")
+}
+
 [node name="GameOverMenu" type="CanvasLayer"]
 script = ExtResource("1_bu5uc")
 
-[node name="ResultLabel" type="Label" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("2_7ox1e")
+offset = Vector2(960, 540)
+
+[node name="ResultLabel" type="Label" parent="Sprite2D"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -269.5
-offset_top = -140.0
-offset_right = 269.5
-offset_bottom = -40.0
+offset_left = 290.5
+offset_top = 175.0
+offset_right = 829.5
+offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -70,7 +134,7 @@ text = "Player 1 Wins!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestartButton" type="Button" parent="."]
+[node name="RestartButton" type="Button" parent="Sprite2D"]
 offset_left = 780.0
 offset_top = 550.0
 offset_right = 1130.0
@@ -82,11 +146,12 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_y37lg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_4icwy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_x8typ")
+theme_override_styles/focus = SubResource("StyleBoxFlat_63044")
 text = "Play Again"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -1
-texture = ExtResource("2_7ox1e")
-offset = Vector2(960, 540)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_utohn")
+}
 
-[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Sprite2D/RestartButton" to="." method="_on_restart_button_pressed"]

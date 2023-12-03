@@ -1,0 +1,140 @@
+[gd_scene load_steps=11 format=3 uid="uid://clss77vcnio35"]
+
+[ext_resource type="Texture2D" uid="uid://d3dq1msghydwu" path="res://Images/RoundSelect.png" id="1_omb71"]
+[ext_resource type="Script" path="res://Scripts/round_select.gd" id="1_sfly4"]
+
+[sub_resource type="SystemFont" id="SystemFont_essbw"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7arl6"]
+bg_color = Color(0, 0, 0, 0.305882)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.996078, 0.603922, 0.0588235, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="SystemFont" id="SystemFont_fssy7"]
+font_names = PackedStringArray("Mongolian Baiti")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd7io"]
+bg_color = Color(0.909804, 0.529412, 0.2, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_137qp"]
+bg_color = Color(0.733333, 0.403922, 0.0980392, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohnee"]
+bg_color = Color(0.733333, 0.403922, 0.0980392, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id7pf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_jpd06"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[node name="RoundSelect" type="CanvasLayer"]
+script = ExtResource("1_sfly4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_omb71")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -292.5
+offset_top = 125.0
+offset_right = 292.5
+offset_bottom = 313.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_essbw")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_7arl6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7arl6")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_7arl6")
+placeholder_text = "Enter a number from 1-100"
+alignment = 1
+max_length = 3
+virtual_keyboard_type = 2
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -246.0
+offset_top = 323.0
+offset_right = 246.0
+offset_bottom = 483.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_fssy7")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxFlat_sd7io")
+theme_override_styles/hover = SubResource("StyleBoxFlat_137qp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ohnee")
+theme_override_styles/focus = SubResource("StyleBoxFlat_id7pf")
+text = "Play Game"
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -21.0
+offset_right = 375.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.87451, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_jpd06")
+theme_override_font_sizes/font_size = 50
+text = "Please enter a number between 1-100"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

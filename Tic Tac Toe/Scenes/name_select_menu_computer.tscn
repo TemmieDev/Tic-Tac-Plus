@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://c430r24wy302s"]
+
+[ext_resource type="Script" path="res://Scripts/name_select_menu.gd" id="1_eldx3"]
+[ext_resource type="Texture2D" uid="uid://f3opabxdlcwl" path="res://Images/PlayerName UI Computer.png" id="2_4tun3"]
+
+[sub_resource type="SystemFont" id="SystemFont_nyn3f"]
+font_names = PackedStringArray("Mongolian Baiti")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7krs"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6npv"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_d1hp4"]
+font_names = PackedStringArray("Mongolian Baiti")
+subpixel_positioning = 0
+
+[node name="NameSelectMenuComputer" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_eldx3")
+
+[node name="PlayerName UI" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("2_4tun3")
+
+[node name="PlayerX" type="LineEdit" parent="."]
+offset_left = 672.0
+offset_top = 595.0
+offset_right = 1252.0
+offset_bottom = 791.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_nyn3f")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_a7krs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_j6npv")
+placeholder_text = "Enter Name"
+alignment = 1
+max_length = 12
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -87.0
+offset_right = 271.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_d1hp4")
+theme_override_font_sizes/font_size = 30
+text = "Player names can only go up to 12 characters"
+horizontal_alignment = 1
+vertical_alignment = 2

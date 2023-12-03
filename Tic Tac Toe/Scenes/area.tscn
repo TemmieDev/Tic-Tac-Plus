@@ -1,16 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://kfa26n035vg6"]
 
-[ext_resource type="Script" path="res://Scenes/area.gd" id="1_dow47"]
+[ext_resource type="Script" path="res://Scripts/area.gd" id="1_dow47"]
 [ext_resource type="Texture2D" uid="uid://dk0y4tei3v4h5" path="res://Images/Circle Update.png" id="1_h6ffv"]
 [ext_resource type="Texture2D" uid="uid://du5nciyg1ov5x" path="res://Images/Cross Update.png" id="2_idt2w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6eqb3"]
-size = Vector2(323, 323)
+size = Vector2(337, 343)
 
 [node name="Area" type="Area2D"]
 script = ExtResource("1_dow47")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9.5, 0)
 shape = SubResource("RectangleShape2D_6eqb3")
 
 [node name="Circle_Transparent" type="Sprite2D" parent="."]

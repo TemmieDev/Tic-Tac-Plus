@@ -8,7 +8,11 @@ signal player_change
 
 var player : int
 var player_1 : bool
-var player_name : String
+var playerX_name : String
+var playerO_name : String
+var playerX_score : int
+var playerO_score : int
+var bestOfChoice : int
 var moves : int
 var winner : int
 var temp_marker
@@ -21,24 +25,38 @@ var row_sum : int
 var col_sum : int
 var diagonal1_sum : int
 var diagonal2_sum : int
+var game_start : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if $Board:
-		board_size = $Board.texture.get_width()
+	board_size = 1080
 	# divide board size by 3 to get the size of individual cell
 	cell_size = board_size / 3
-	if $PlayerPanel:
 	#get coordinates of small panel on right side of window
-		player_panel_pos = $PlayerPanel.get_position()
+	player_panel_pos = $PlayerPanel.get_position()
 	new_game()
 	if player == 1:
 		player_1 = true
+	$RoundSelect.show()
+	$NameSelectMenu.show()
+	$NameSelectMenu/PlayButton.show()
+	get_tree().paused = true
+	playerO_score = 0
+	playerX_score = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if $LineEdit:
-		player_name = $LineEdit.get_text()
+	playerX_name = $NameSelectMenu.get_node("PlayerX").get_text()
+	playerO_name = $NameSelectMenu.get_node("PlayerO").get_text()
+	if playerX_name == "":
+		playerX_name = "Player 1"
+	if playerO_name == "":
+		playerO_name = "Player 2"
+	$"Player1 Score".text = playerX_name+": "+str(playerX_score)
+	$"Player2 Score".text = playerO_name+": "+str(playerO_score)
+	$"Best Of".text = "First to  "+str(bestOfChoice)
+	
+	
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -55,17 +73,31 @@ func _input(event):
 					if check_win() != 0:
 						get_tree().paused = true
 						$GameOverMenu.show()
+						$GameOverMenu/AnimationPlayer.play("show")
 						$"CRT Filter".show()
 						if winner == 1:
-							$GameOverMenu.get_node("ResultLabel").text = player_name+" Wins!"
+							playerX_score += 1
+							if playerX_score == bestOfChoice:
+								$WinScreen.show()
+								$WinScreen/AnimationPlayer.play("show")
+								$WinScreen.get_node("Label").text = playerX_name
+							else:
+								$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerX_name+" Wins!"
 						elif winner == -1:
-							$GameOverMenu.get_node("ResultLabel").text = "Player 2 Wins!"
+							playerO_score += 1
+							if playerO_score == bestOfChoice:
+								$WinScreen.show()
+								$WinScreen/AnimationPlayer.play("show")
+								$WinScreen.get_node("Label").text = playerO_name
+							else:
+								$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerO_name+" Wins!"
 					#check if the board has been filled
 					elif moves == 9:
 						get_tree().paused = true
 						$GameOverMenu.show()
+						$GameOverMenu/AnimationPlayer.play("show")
 						$"CRT Filter".show()
-						$GameOverMenu.get_node("ResultLabel").text = "It's a Tie!"
+						$GameOverMenu.get_node("Sprite2D/ResultLabel").text = "It's a Tie!"
 					player *= -1
 					emit_signal("player_change")
 					#update the panel marker
@@ -100,9 +132,8 @@ func new_game():
 	get_tree().call_group("crosses", "queue_free")
 	#create a marker to show starting player's turn
 	create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
-	if $GameOverMenu and $"CRT Filter":
-		$GameOverMenu.hide()
-		$"CRT Filter".hide()
+	$GameOverMenu.hide()
+	$"CRT Filter".hide()
 	get_tree().paused = false
 	emit_signal("new_game_started")
 
@@ -138,3 +169,24 @@ func check_win():
 
 func _on_game_over_menu_restart():
 	new_game()
+
+
+func _on_play_button_pressed():
+	$NameSelectMenu.hide()
+	$NameSelectMenu/PlayButton.hide()
+
+
+func _on_round_select_round_select_pressed():
+	bestOfChoice = int($RoundSelect.get_node("LineEdit").get_text())
+	if bestOfChoice > 100 or bestOfChoice < 1:
+		$RoundSelect.get_node("Label").show()
+		await get_tree().create_timer(2).timeout
+		$RoundSelect.get_node("Label").hide()
+	else:
+		$RoundSelect.hide()
+		get_tree().paused = false
+
+
+func _on_win_screen_back_to_menu():
+	LoadManager.load_scene("res://Scenes/menu.tscn")
+	get_tree().paused = false

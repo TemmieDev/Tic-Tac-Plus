@@ -1,0 +1,238 @@
+[gd_scene load_steps=21 format=3 uid="uid://conk338ydt306"]
+
+[ext_resource type="Script" path="res://Scenes/hard.gd" id="1_wcbc1"]
+[ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_oqhrc"]
+[ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_p2tb6"]
+[ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="4_ijtwa"]
+[ext_resource type="Texture2D" uid="uid://cedxq5gnvrw5s" path="res://Images/Tic Tac Plus Grid Test.png" id="5_hcbua"]
+[ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="6_nmij6"]
+[ext_resource type="PackedScene" uid="uid://cgkfo6vk24voq" path="res://Scenes/win_screen.tscn" id="7_p835r"]
+[ext_resource type="PackedScene" uid="uid://clss77vcnio35" path="res://Scenes/round_select.tscn" id="8_weq4y"]
+[ext_resource type="PackedScene" uid="uid://c430r24wy302s" path="res://Scenes/name_select_menu_computer.tscn" id="9_ir6kp"]
+[ext_resource type="Texture2D" uid="uid://dgjudgo4u8ieh" path="res://Images/TicTacToe Easy BG.png" id="10_elofd"]
+[ext_resource type="Shader" path="res://game_over_menu.gdshader" id="11_2onva"]
+[ext_resource type="PackedScene" uid="uid://kfa26n035vg6" path="res://Scenes/area.tscn" id="12_gbclr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jaqt"]
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.914063, 0.558594, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="SystemFont" id="SystemFont_lwlkq"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7f63"]
+bg_color = Color(1, 0.709804, 0.219608, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhfv4"]
+bg_color = Color(0.827451, 0.560784, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twaiu"]
+bg_color = Color(0.827451, 0.560784, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bs6c2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsd7q"]
+shader = ExtResource("11_2onva")
+shader_parameter/res = Vector2(0, 0)
+shader_parameter/mask_type = 0
+shader_parameter/bloom_type = 0
+shader_parameter/hardScan = -8.0
+shader_parameter/hardPix = -2.0
+shader_parameter/hardBloomScan = -2.0
+shader_parameter/hardBloomPix = -1.5
+shader_parameter/bloomAmount = 16.0
+shader_parameter/warp = Vector2(64, 24)
+shader_parameter/maskDark = 0.5
+shader_parameter/maskLight = 1.5
+
+[sub_resource type="SystemFont" id="SystemFont_0404g"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[node name="Hard" type="Node"]
+script = ExtResource("1_wcbc1")
+circle_scene = ExtResource("2_oqhrc")
+cross_scene = ExtResource("3_p2tb6")
+
+[node name="Board" parent="." instance=ExtResource("4_ijtwa")]
+position = Vector2(966, 540)
+texture = ExtResource("5_hcbua")
+metadata/_edit_lock_ = true
+
+[node name="PlayerPanel" type="Panel" parent="."]
+offset_left = 1227.0
+offset_top = 312.0
+offset_right = 1577.0
+offset_bottom = 662.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6jaqt")
+metadata/_edit_lock_ = true
+
+[node name="GameOverMenu" parent="." instance=ExtResource("6_nmij6")]
+process_mode = 2
+visible = false
+
+[node name="WinScreen" parent="." instance=ExtResource("7_p835r")]
+process_mode = 2
+visible = false
+
+[node name="RoundSelect" parent="." instance=ExtResource("8_weq4y")]
+process_mode = 2
+visible = false
+
+[node name="NameSelectMenuComputer" parent="." instance=ExtResource("9_ir6kp")]
+visible = false
+
+[node name="PlayButton" type="Button" parent="NameSelectMenuComputer"]
+process_mode = 2
+visible = false
+offset_left = 710.0
+offset_top = 818.0
+offset_right = 1234.0
+offset_bottom = 1018.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_lwlkq")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_o7f63")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhfv4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_twaiu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bs6c2")
+text = "Continue"
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(960, 540)
+texture = ExtResource("10_elofd")
+
+[node name="CRT Filter" type="Panel" parent="."]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_bsd7q")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Area" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(179, 180)
+
+[node name="Area2" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(540, 180)
+
+[node name="Area3" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(899, 180)
+
+[node name="Area4" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(182, 540)
+
+[node name="Area5" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(539, 540)
+
+[node name="Area6" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(900, 539)
+
+[node name="Area7" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(178, 901)
+
+[node name="Area8" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(540, 901)
+
+[node name="Area9" parent="." instance=ExtResource("12_gbclr")]
+position = Vector2(901, 900)
+
+[node name="Best Of" type="Label" parent="."]
+offset_left = 1164.0
+offset_top = 674.0
+offset_right = 1632.0
+offset_bottom = 765.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = SubResource("SystemFont_0404g")
+theme_override_font_sizes/font_size = 90
+text = "First To 0"
+horizontal_alignment = 1
+
+[node name="Player1 Score" type="Label" parent="."]
+offset_left = 1166.0
+offset_top = 766.0
+offset_right = 1634.0
+offset_bottom = 857.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_0404g")
+theme_override_font_sizes/font_size = 74
+text = "Player 1: 0"
+horizontal_alignment = 1
+
+[node name="Player2 Score" type="Label" parent="."]
+offset_left = 1166.0
+offset_top = 853.0
+offset_right = 1634.0
+offset_bottom = 944.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = SubResource("SystemFont_0404g")
+theme_override_font_sizes/font_size = 74
+text = "Player 2: 0"
+horizontal_alignment = 1
+
+[connection signal="new_game_started" from="." to="Area" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area2" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area3" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area4" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area5" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area6" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area7" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area8" method="_on_main_new_game_started"]
+[connection signal="new_game_started" from="." to="Area9" method="_on_main_new_game_started"]
+[connection signal="player_change" from="." to="Area" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area2" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area3" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area4" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area5" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area6" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area7" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area8" method="_on_main_player_change"]
+[connection signal="player_change" from="." to="Area9" method="_on_main_player_change"]
+[connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
+[connection signal="backToMenu" from="WinScreen" to="." method="_on_win_screen_back_to_menu"]
+[connection signal="RoundSelectPressed" from="RoundSelect" to="." method="_on_round_select_round_select_pressed"]
+[connection signal="pressed" from="NameSelectMenuComputer/PlayButton" to="." method="_on_play_button_pressed"]
