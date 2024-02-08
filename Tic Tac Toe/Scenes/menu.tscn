@@ -1,8 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://dbcc72ec3esfq"]
+[gd_scene load_steps=30 format=3 uid="uid://dbcc72ec3esfq"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_2kg0a"]
 [ext_resource type="Texture2D" uid="uid://boav0gqnddlqi" path="res://Images/TicTacPLUS Menu BG.png" id="2_mf700"]
-[ext_resource type="Texture2D" uid="uid://dfcffvln30ijw" path="res://Images/gear-option.png" id="3_c8sxj"]
 [ext_resource type="Texture2D" uid="uid://bbdtleuipvtbi" path="res://Images/quit icon.png" id="4_yc6ut"]
 
 [sub_resource type="SystemFont" id="SystemFont_ntrdb"]
@@ -113,27 +112,6 @@ corner_radius_top_right = 60
 corner_radius_bottom_right = 60
 corner_radius_bottom_left = 60
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3o7e"]
-bg_color = Color(0, 0.211765, 0.972549, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwbn3"]
-bg_color = Color(0.00392157, 0.160784, 0.72549, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvfm7"]
-bg_color = Color(0.00392157, 0.160784, 0.72549, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emuok"]
 bg_color = Color(0, 0.72549, 0.768627, 1)
 corner_radius_top_left = 20
@@ -161,6 +139,24 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pcf1o"]
+bg_color = Color(0.996094, 0.519531, 0.15625, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_2i1c6"]
+font_names = PackedStringArray("Mongolian Baiti")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o86js"]
+bg_color = Color(0.234375, 0.925781, 0.515625, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6k23"]
+bg_color = Color(0.945313, 0, 0.167969, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wseu"]
+bg_color = Color(0.230469, 0.808594, 0.960938, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xp5uo"]
+bg_color = Color(0, 0.722656, 0.765625, 1)
 
 [node name="Menu" type="Node"]
 script = ExtResource("1_2kg0a")
@@ -229,21 +225,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_2m4ni")
 theme_override_styles/focus = SubResource("StyleBoxFlat_x7h0k")
 text = "Local Play"
 
-[node name="Settings" type="Button" parent="."]
-offset_left = 28.0
-offset_top = 27.0
-offset_right = 128.0
-offset_bottom = 127.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k3o7e")
-theme_override_styles/hover = SubResource("StyleBoxFlat_cwbn3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jvfm7")
-theme_override_styles/focus = SubResource("StyleBoxFlat_k3o7e")
-
-[node name="Gear-option" type="Sprite2D" parent="Settings"]
-position = Vector2(50, 50)
-scale = Vector2(0.141113, 0.141113)
-texture = ExtResource("3_c8sxj")
-
 [node name="Quit" type="Button" parent="."]
 offset_left = 30.0
 offset_top = 950.0
@@ -259,6 +240,132 @@ position = Vector2(50, 50)
 scale = Vector2(0.141113, 0.141113)
 texture = ExtResource("4_yc6ut")
 
+[node name="LocalPlayPopup" type="Panel" parent="."]
+visible = false
+offset_left = 1316.0
+offset_top = 844.0
+offset_right = 1880.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pcf1o")
+
+[node name="Label" type="Label" parent="LocalPlayPopup"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 189.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_2i1c6")
+theme_override_font_sizes/font_size = 60
+text = "Play against 
+a friend!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EasyPopup" type="Panel" parent="."]
+visible = false
+offset_left = 1316.0
+offset_top = 844.0
+offset_right = 1880.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_o86js")
+
+[node name="Label" type="Label" parent="EasyPopup"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 189.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_2i1c6")
+theme_override_font_sizes/font_size = 60
+text = "Play against an
+easy AI!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HardPopup" type="Panel" parent="."]
+visible = false
+offset_left = 1316.0
+offset_top = 844.0
+offset_right = 1880.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_r6k23")
+
+[node name="Label" type="Label" parent="HardPopup"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 189.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_2i1c6")
+theme_override_font_sizes/font_size = 60
+text = "Play against an
+impossible AI!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FrenzyPopup" type="Panel" parent="."]
+visible = false
+offset_left = 1316.0
+offset_top = 844.0
+offset_right = 1880.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6wseu")
+
+[node name="Label" type="Label" parent="FrenzyPopup"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 189.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_2i1c6")
+theme_override_font_sizes/font_size = 60
+text = "Play against
+the clock!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitPopup" type="Panel" parent="."]
+visible = false
+offset_left = 1316.0
+offset_top = 844.0
+offset_right = 1880.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xp5uo")
+
+[node name="Label" type="Label" parent="QuitPopup"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 189.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_2i1c6")
+theme_override_font_sizes/font_size = 60
+text = "Exit the game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="Frenzy" to="." method="_on_frenzy_mouse_entered"]
+[connection signal="mouse_exited" from="Frenzy" to="." method="_on_frenzy_mouse_exited"]
+[connection signal="pressed" from="Frenzy" to="." method="_on_frenzy_pressed"]
+[connection signal="mouse_entered" from="Hard" to="." method="_on_hard_mouse_entered"]
+[connection signal="mouse_exited" from="Hard" to="." method="_on_hard_mouse_exited"]
+[connection signal="pressed" from="Hard" to="." method="_on_hard_pressed"]
+[connection signal="mouse_entered" from="Easy" to="." method="_on_easy_mouse_entered"]
+[connection signal="mouse_exited" from="Easy" to="." method="_on_easy_mouse_exited"]
 [connection signal="pressed" from="Easy" to="." method="_on_easy_pressed"]
+[connection signal="mouse_entered" from="LocalPlay" to="." method="_on_local_play_mouse_entered"]
+[connection signal="mouse_exited" from="LocalPlay" to="." method="_on_local_play_mouse_exited"]
 [connection signal="pressed" from="LocalPlay" to="." method="_on_local_play_pressed"]
+[connection signal="mouse_entered" from="Quit" to="." method="_on_quit_mouse_entered"]
+[connection signal="mouse_exited" from="Quit" to="." method="_on_quit_mouse_exited"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

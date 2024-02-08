@@ -1,16 +1,17 @@
-[gd_scene load_steps=20 format=3 uid="uid://conk338ydt306"]
+[gd_scene load_steps=22 format=3 uid="uid://pkbdiwbofjid"]
 
-[ext_resource type="Script" path="res://Scripts/hard.gd" id="1_nim0c"]
-[ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_oqhrc"]
-[ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_p2tb6"]
-[ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="4_ijtwa"]
-[ext_resource type="Texture2D" uid="uid://cedxq5gnvrw5s" path="res://Images/Tic Tac Plus Grid Test.png" id="5_hcbua"]
-[ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="6_nmij6"]
-[ext_resource type="PackedScene" uid="uid://cgkfo6vk24voq" path="res://Scenes/win_screen.tscn" id="7_p835r"]
-[ext_resource type="Texture2D" uid="uid://bejryxx7kvk7p" path="res://Images/TicTacToe Hard BG.png" id="9_654oq"]
-[ext_resource type="PackedScene" uid="uid://c430r24wy302s" path="res://Scenes/name_select_menu_computer.tscn" id="9_ir6kp"]
-[ext_resource type="Shader" path="res://game_over_menu.gdshader" id="11_2onva"]
-[ext_resource type="PackedScene" uid="uid://kfa26n035vg6" path="res://Scenes/area.tscn" id="12_gbclr"]
+[ext_resource type="Script" path="res://Scripts/frenzy.gd" id="1_n6njt"]
+[ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_vfln1"]
+[ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_m1qsy"]
+[ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="4_x3gxh"]
+[ext_resource type="Texture2D" uid="uid://cedxq5gnvrw5s" path="res://Images/Tic Tac Plus Grid Test.png" id="5_jh0ta"]
+[ext_resource type="PackedScene" uid="uid://cb6novqvohrp8" path="res://Scenes/frenzytutorial.tscn" id="5_rgqkk"]
+[ext_resource type="PackedScene" uid="uid://d11qqu7mw5sb0" path="res://Scenes/game_over_menu.tscn" id="6_h5t6s"]
+[ext_resource type="PackedScene" uid="uid://cclxy0vw47mjy" path="res://Scenes/YouLose.tscn" id="8_eb76d"]
+[ext_resource type="PackedScene" uid="uid://c430r24wy302s" path="res://Scenes/name_select_menu_computer.tscn" id="9_6b8i5"]
+[ext_resource type="Texture2D" uid="uid://f1iwu3jvs3so" path="res://Images/TicTacToe Frenzy BG.png" id="10_wehrb"]
+[ext_resource type="Shader" path="res://game_over_menu.gdshader" id="11_vf4cs"]
+[ext_resource type="PackedScene" uid="uid://kfa26n035vg6" path="res://Scenes/area.tscn" id="12_ynpdt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jaqt"]
 bg_color = Color(1, 1, 1, 0)
@@ -68,7 +69,7 @@ corner_radius_bottom_left = 40
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bsd7q"]
-shader = ExtResource("11_2onva")
+shader = ExtResource("11_vf4cs")
 shader_parameter/res = Vector2(0, 0)
 shader_parameter/mask_type = 0
 shader_parameter/bloom_type = 0
@@ -84,14 +85,17 @@ shader_parameter/maskLight = 1.5
 [sub_resource type="SystemFont" id="SystemFont_0404g"]
 font_names = PackedStringArray("Mongolian Baiti")
 
-[node name="Hard" type="Node"]
-script = ExtResource("1_nim0c")
-circle_scene = ExtResource("2_oqhrc")
-cross_scene = ExtResource("3_p2tb6")
+[sub_resource type="SystemFont" id="SystemFont_wh0wy"]
+font_names = PackedStringArray("Mongolian Baiti")
 
-[node name="Board" parent="." instance=ExtResource("4_ijtwa")]
+[node name="Frenzy" type="Node"]
+script = ExtResource("1_n6njt")
+circle_scene = ExtResource("2_vfln1")
+cross_scene = ExtResource("3_m1qsy")
+
+[node name="Board" parent="." instance=ExtResource("4_x3gxh")]
 position = Vector2(966, 540)
-texture = ExtResource("5_hcbua")
+texture = ExtResource("5_jh0ta")
 metadata/_edit_lock_ = true
 
 [node name="PlayerPanel" type="Panel" parent="."]
@@ -102,15 +106,17 @@ offset_bottom = 662.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6jaqt")
 metadata/_edit_lock_ = true
 
-[node name="GameOverMenu" parent="." instance=ExtResource("6_nmij6")]
+[node name="GameOverMenu" parent="." instance=ExtResource("6_h5t6s")]
 process_mode = 2
 visible = false
 
-[node name="WinScreen" parent="." instance=ExtResource("7_p835r")]
-process_mode = 2
+[node name="FrenzyTutorial" parent="." instance=ExtResource("5_rgqkk")]
 visible = false
 
-[node name="NameSelectMenuComputer" parent="." instance=ExtResource("9_ir6kp")]
+[node name="YouLose" parent="." instance=ExtResource("8_eb76d")]
+visible = false
+
+[node name="NameSelectMenuComputer" parent="." instance=ExtResource("9_6b8i5")]
 visible = false
 
 [node name="PlayButton" type="Button" parent="NameSelectMenuComputer"]
@@ -133,7 +139,7 @@ text = "Continue"
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(960, 540)
-texture = ExtResource("9_654oq")
+texture = ExtResource("10_wehrb")
 
 [node name="CRT Filter" type="Panel" parent="."]
 visible = false
@@ -146,34 +152,34 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="Area" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(179, 180)
 
-[node name="Area2" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area2" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(540, 180)
 
-[node name="Area3" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area3" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(899, 180)
 
-[node name="Area4" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area4" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(182, 540)
 
-[node name="Area5" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area5" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(539, 540)
 
-[node name="Area6" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area6" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(900, 539)
 
-[node name="Area7" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area7" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(178, 901)
 
-[node name="Area8" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area8" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(540, 901)
 
-[node name="Area9" parent="." instance=ExtResource("12_gbclr")]
+[node name="Area9" parent="." instance=ExtResource("12_ynpdt")]
 position = Vector2(901, 900)
 
-[node name="Best Of" type="Label" parent="."]
+[node name="Score" type="Label" parent="."]
 offset_left = 1164.0
 offset_top = 674.0
 offset_right = 1632.0
@@ -182,14 +188,15 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
 theme_override_fonts/font = SubResource("SystemFont_0404g")
 theme_override_font_sizes/font_size = 90
-text = "First To 0"
+text = "Score: 0"
 horizontal_alignment = 1
 
 [node name="Player1 Score" type="Label" parent="."]
+visible = false
 offset_left = 1166.0
-offset_top = 766.0
+offset_top = 794.0
 offset_right = 1634.0
-offset_bottom = 857.0
+offset_bottom = 885.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = SubResource("SystemFont_0404g")
@@ -197,18 +204,28 @@ theme_override_font_sizes/font_size = 74
 text = "Player 1: 0"
 horizontal_alignment = 1
 
-[node name="Player2 Score" type="Label" parent="."]
-offset_left = 1166.0
-offset_top = 853.0
-offset_right = 1634.0
-offset_bottom = 944.0
+[node name="TimeLeft" type="Label" parent="."]
+offset_left = 1218.0
+offset_top = 778.0
+offset_right = 1622.0
+offset_bottom = 884.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
-theme_override_fonts/font = SubResource("SystemFont_0404g")
-theme_override_font_sizes/font_size = 74
-text = "Player 2: 0"
+theme_override_constants/outline_size = 23
+theme_override_fonts/font = SubResource("SystemFont_wh0wy")
+theme_override_font_sizes/font_size = 80
+text = "Time left: "
 horizontal_alignment = 1
+vertical_alignment = 1
 
+[connection signal="computer_mode" from="." to="Area" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area2" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area3" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area4" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area5" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area6" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area7" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area8" method="_on_easy_computer_mode"]
+[connection signal="computer_mode" from="." to="Area9" method="_on_easy_computer_mode"]
 [connection signal="new_game_started" from="." to="Area" method="_on_main_new_game_started"]
 [connection signal="new_game_started" from="." to="Area2" method="_on_main_new_game_started"]
 [connection signal="new_game_started" from="." to="Area3" method="_on_main_new_game_started"]
@@ -229,5 +246,16 @@ horizontal_alignment = 1
 [connection signal="player_change" from="." to="Area9" method="_on_main_player_change"]
 [connection signal="backtoMenu" from="GameOverMenu" to="." method="_on_game_over_menu_backto_menu"]
 [connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
-[connection signal="backToMenu" from="WinScreen" to="." method="_on_win_screen_back_to_menu"]
+[connection signal="RoundSelectPressed" from="FrenzyTutorial" to="." method="_on_frenzy_tutorial_round_select_pressed"]
+[connection signal="backToMenu" from="YouLose" to="." method="_on_you_lose_back_to_menu"]
 [connection signal="pressed" from="NameSelectMenuComputer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="mouse_entered" from="Area" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="Area" to="." method="_on_area_mouse_exited"]
+[connection signal="mouse_entered" from="Area2" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area3" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area4" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area5" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area6" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area7" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area8" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_entered" from="Area9" to="." method="_on_area_mouse_entered"]

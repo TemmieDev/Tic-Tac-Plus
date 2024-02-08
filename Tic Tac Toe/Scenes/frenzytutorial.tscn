@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://cb6novqvohrp8"]
+
+[ext_resource type="Script" path="res://Scripts/round_select.gd" id="1_a31vw"]
+[ext_resource type="Texture2D" uid="uid://d0gsg48nyyf1v" path="res://Images/FranzyTutorial.png" id="2_2sll7"]
+
+[sub_resource type="SystemFont" id="SystemFont_fssy7"]
+font_names = PackedStringArray("Mongolian Baiti")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd7io"]
+bg_color = Color(0.909804, 0.529412, 0.2, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_137qp"]
+bg_color = Color(0.733333, 0.403922, 0.0980392, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohnee"]
+bg_color = Color(0.733333, 0.403922, 0.0980392, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id7pf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="FrenzyTutorial" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_a31vw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("2_2sll7")
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -246.0
+offset_top = 275.0
+offset_right = 246.0
+offset_bottom = 435.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = SubResource("SystemFont_fssy7")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxFlat_sd7io")
+theme_override_styles/hover = SubResource("StyleBoxFlat_137qp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ohnee")
+theme_override_styles/focus = SubResource("StyleBoxFlat_id7pf")
+text = "Play Game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

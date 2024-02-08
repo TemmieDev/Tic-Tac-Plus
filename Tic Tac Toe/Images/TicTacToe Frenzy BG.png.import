@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k5bfgy4hcgvp"
-path="res://.godot/imported/wrh8sbqkx8ub1.png-5308d8cd98d35319784a3c1a09ecb7b7.ctex"
+uid="uid://f1iwu3jvs3so"
+path="res://.godot/imported/TicTacToe Frenzy BG.png-3f7e5dbe7f0ace634fb1dcb9a4f864d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/wrh8sbqkx8ub1.png"
-dest_files=["res://.godot/imported/wrh8sbqkx8ub1.png-5308d8cd98d35319784a3c1a09ecb7b7.ctex"]
+source_file="res://Images/TicTacToe Frenzy BG.png"
+dest_files=["res://.godot/imported/TicTacToe Frenzy BG.png-3f7e5dbe7f0ace634fb1dcb9a4f864d2.ctex"]
 
 [params]
 

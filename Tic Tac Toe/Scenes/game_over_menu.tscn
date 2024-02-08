@@ -50,31 +50,6 @@ corner_radius_bottom_left = 20
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_63044"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="Animation" id="Animation_uv5bg"]
-resource_name = "show"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.4)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.4)
-}
-
 [sub_resource type="Animation" id="Animation_bxtop"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -98,6 +73,31 @@ tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_uv5bg"]
+resource_name = "show"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_utohn"]
@@ -136,9 +136,9 @@ vertical_alignment = 1
 
 [node name="RestartButton" type="Button" parent="Sprite2D"]
 offset_left = 780.0
-offset_top = 550.0
+offset_top = 516.0
 offset_right = 1130.0
-offset_bottom = 650.0
+offset_bottom = 616.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 theme_override_fonts/font = SubResource("SystemFont_x3khm")
@@ -149,9 +149,26 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_x8typ")
 theme_override_styles/focus = SubResource("StyleBoxFlat_63044")
 text = "Play Again"
 
+[node name="BacktoMenu" type="Button" parent="Sprite2D"]
+offset_left = 780.0
+offset_top = 624.0
+offset_right = 1130.0
+offset_bottom = 724.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_x3khm")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_y37lg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4icwy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x8typ")
+theme_override_styles/focus = SubResource("StyleBoxFlat_63044")
+text = "Back to menu"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_utohn")
 }
 
 [connection signal="pressed" from="Sprite2D/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Sprite2D/BacktoMenu" to="." method="_on_backto_menu_pressed"]
+[connection signal="pressed" from="Sprite2D/BacktoMenu" to="." method="_on_restart_button_pressed"]

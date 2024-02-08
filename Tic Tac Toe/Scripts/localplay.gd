@@ -190,3 +190,7 @@ func _on_round_select_round_select_pressed():
 func _on_win_screen_back_to_menu():
 	LoadManager.load_scene("res://Scenes/menu.tscn")
 	get_tree().paused = false
+
+
+func _on_game_over_menu_backto_menu():
+	LoadManager.load_scene("res://Scenes/menu.tscn")

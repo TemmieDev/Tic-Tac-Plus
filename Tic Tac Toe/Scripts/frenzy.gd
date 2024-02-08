@@ -27,6 +27,8 @@ var col_sum : int
 var diagonal1_sum : int
 var diagonal2_sum : int
 var game_start : bool
+var starting_time : float
+var time : float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,13 +40,15 @@ func _ready():
 	new_game()
 	if player == 1:
 		player_1 = true
-	$RoundSelect.show()
+	$FrenzyTutorial.show()
 	$NameSelectMenuComputer.show()
 	$NameSelectMenuComputer/PlayButton.show()
 	get_tree().paused = true
 	playerO_score = 0
 	playerX_score = 0
 	emit_signal("computer_mode")
+	starting_time = 31
+	time = 31
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -53,68 +57,55 @@ func _process(delta):
 		playerX_name = "Player 1"
 	playerO_name = "Computer"
 	$"Player1 Score".text = playerX_name+": "+str(playerX_score)
-	$"Player2 Score".text = playerO_name+": "+str(playerO_score)
-	$"Best Of".text = "First to "+str(bestOfChoice)
-
-	
-	
+	$Score.text = "Score: "+str(playerX_score)
+	$TimeLeft.text = "Time left: "+str(floor(starting_time))
 
 func _input(event):
-	if event is InputEventMouseButton and player == 1:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			#check if mouse is on the game board
-			if event.position.x < board_size:
-				#convert mouse position into grid location
-				grid_pos = Vector2i(event.position / cell_size)
-				if grid_data[grid_pos.y][grid_pos.x] == 0:
-					moves += 1
-					grid_data[grid_pos.y][grid_pos.x] = player
-					#place that player's marker
-					create_marker(player, grid_pos * cell_size + Vector2i(cell_size / 2, cell_size / 2))
-					if check_win() != 0:
-						get_tree().paused = true
-						$GameOverMenu.show()
-						$GameOverMenu/AnimationPlayer.play("show")
-						$"CRT Filter".show()
-						if winner == 1:
-							playerX_score += 1
-							if playerX_score == bestOfChoice:
-								$WinScreen.show()
-								$WinScreen/AnimationPlayer.play("show")
-								$WinScreen.get_node("Label").text = playerX_name
-							else:
-								$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerX_name+" Wins!"
-						elif winner == -1:
-							playerO_score += 1
-							if playerO_score == bestOfChoice:
-								$WinScreen.show()
-								$WinScreen/AnimationPlayer.play("show")
-								$WinScreen.get_node("Label").text = playerO_name
-							else:
-								$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerO_name+" Wins!"
-					#check if the board has been filled
-					elif moves == 9:
-						get_tree().paused = true
-						$GameOverMenu.show()
-						$GameOverMenu/AnimationPlayer.play("show")
-						$"CRT Filter".show()
-						$GameOverMenu.get_node("Sprite2D/ResultLabel").text = "It's a Tie!"
-
-					if check_win() == 0 and moves < 9:
-						#toggle the player
+	if starting_time > 0:
+		if event is InputEventMouseButton and player == 1:
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				#check if mouse is on the game board
+				if event.position.x < board_size:
+					#convert mouse position into grid location
+					grid_pos = Vector2i(event.position / cell_size)
+					if grid_data[grid_pos.y][grid_pos.x] == 0:
+						moves += 1
+						grid_data[grid_pos.y][grid_pos.x] = player
+						#place that player's marker
+						create_marker(player, grid_pos * cell_size + Vector2i(cell_size / 2, cell_size / 2))
+						starting_time = time
 						player *= -1
+						if check_win() != 0:
+							get_tree().paused = true
+							$"CRT Filter".show()
+							if winner == 1:
+								playerX_score += 1
+								if time > 1:
+									time -= 2
+								new_game()
+							elif winner == -1:
+								$YouLose.show()
+								$YouLose/AnimationPlayer.play("show")
+								$YouLose.get_node("TotalScore").text = "Your total score was:  "+str(playerX_score)
+						#check if the board has been filled
+						elif moves == 9:
+							new_game()
 						
-						#check if the current player is the computer
+							#check if the current player is the computer
 						if player == -1:
 							computer_move()
-					#update the panel marker
-					temp_marker.queue_free()
-					create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
-					print(grid_data)
+						#update the panel marker
+						temp_marker.queue_free()
+						create_marker(player, player_panel_pos + Vector2i(cell_size / 2.07, cell_size / 2.1), true)
+						print(grid_data)
+	if starting_time <= 0:
+		get_tree().paused = true
+		$YouLose.show()
+		$YouLose/AnimationPlayer.play("show")
+		$YouLose.get_node("TotalScore").text = "Your total score was:  "+str(playerX_score)
 
 # Function for the computer to make a move
 func computer_move():
-	await get_tree().create_timer(1).timeout
 	#choose a random empty cell
 	var empty_cells = []
 	for y in range(3):
@@ -136,32 +127,17 @@ func computer_move():
 	create_marker(player, random_cell * cell_size + Vector2i(cell_size / 2, cell_size / 2))
 	if check_win() != 0:
 		get_tree().paused = true
-		$GameOverMenu.show()
-		$GameOverMenu/AnimationPlayer.play("show")
 		$"CRT Filter".show()
 		if winner == 1:
 			playerX_score += 1
-			if playerX_score == bestOfChoice:
-				$WinScreen.show()
-				$WinScreen/AnimationPlayer.play("show")
-				$WinScreen.get_node("Label").text = playerX_name
-			else:
-				$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerX_name+" Wins!"
+			new_game()
 		elif winner == -1:
-			playerO_score += 1
-			if playerO_score == bestOfChoice:
-				$WinScreen.show()
-				$WinScreen/AnimationPlayer.play("show")
-				$WinScreen.get_node("Label").text = playerO_name
-			else:
-				$GameOverMenu.get_node("Sprite2D/ResultLabel").text = playerO_name+" Wins!"
+			$YouLose.show()
+			$YouLose/AnimationPlayer.play("show")
+			$YouLose.get_node("TotalScore").text = "Your total score was:  "+str(playerX_score)
 	#check if the board has been filled
 	elif moves == 9:
-		get_tree().paused = true
-		$GameOverMenu.show()
-		$GameOverMenu/AnimationPlayer.play("show")
-		$"CRT Filter".show()
-		$GameOverMenu.get_node("Sprite2D/ResultLabel").text = "It's a Tie!"
+		new_game()
 	player *= -1
 	#update the panel marker
 	temp_marker.queue_free()
@@ -178,6 +154,8 @@ func new_game():
 	$Area7.show()
 	$Area8.show()
 	$Area9.show()
+	if starting_time >= 1:
+		starting_time = time
 	player = 1
 	moves = 0
 	winner = 0
@@ -199,6 +177,10 @@ func new_game():
 	$"CRT Filter".hide()
 	get_tree().paused = false
 	emit_signal("new_game_started")
+
+func _physics_process(delta):
+	if starting_time >= 0:
+		starting_time -= delta
 
 func create_marker(player, position, temp=false):
 	#create a marker node and add it as a child
@@ -239,24 +221,15 @@ func _on_play_button_pressed():
 	$NameSelectMenuComputer/PlayButton.hide()
 
 
-func _on_round_select_round_select_pressed():
-	bestOfChoice = int($RoundSelect.get_node("LineEdit").get_text())
-	if bestOfChoice > 100 or bestOfChoice < 1:
-		$RoundSelect.get_node("Label").show()
-		await get_tree().create_timer(2).timeout
-		$RoundSelect.get_node("Label").hide()
-	else:
-		$RoundSelect.hide()
-		get_tree().paused = false
-
-
-func _on_win_screen_back_to_menu():
-	LoadManager.load_scene("res://Scenes/menu.tscn")
+func _on_frenzy_tutorial_round_select_pressed():
+	$FrenzyTutorial.hide()
 	get_tree().paused = false
 
 
-
-
-
 func _on_game_over_menu_backto_menu():
+	LoadManager.load_scene("res://Scenes/menu.tscn")
+
+
+func _on_you_lose_back_to_menu():
+	get_tree().paused = false
 	LoadManager.load_scene("res://Scenes/menu.tscn")

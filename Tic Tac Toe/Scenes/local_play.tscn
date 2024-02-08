@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://c4mbgrdh6qc44"]
 
-[ext_resource type="Script" path="res://Scripts/main.gd" id="1_i6aj4"]
+[ext_resource type="Script" path="res://Scripts/localplay.gd" id="1_2gl3s"]
 [ext_resource type="PackedScene" uid="uid://8fnogac0e4kj" path="res://Scenes/circle.tscn" id="2_wucjf"]
 [ext_resource type="PackedScene" uid="uid://c33m7j83h12dk" path="res://Scenes/cross.tscn" id="3_dtemh"]
 [ext_resource type="PackedScene" uid="uid://cowd6rbxaf46n" path="res://Scenes/board.tscn" id="4_02amu"]
@@ -86,7 +86,7 @@ shader_parameter/maskLight = 1.5
 font_names = PackedStringArray("Mongolian Baiti")
 
 [node name="LocalPlay" type="Node"]
-script = ExtResource("1_i6aj4")
+script = ExtResource("1_2gl3s")
 circle_scene = ExtResource("2_wucjf")
 cross_scene = ExtResource("3_dtemh")
 
@@ -233,6 +233,7 @@ horizontal_alignment = 1
 [connection signal="player_change" from="." to="Area7" method="_on_main_player_change"]
 [connection signal="player_change" from="." to="Area8" method="_on_main_player_change"]
 [connection signal="player_change" from="." to="Area9" method="_on_main_player_change"]
+[connection signal="backtoMenu" from="GameOverMenu" to="." method="_on_game_over_menu_backto_menu"]
 [connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
 [connection signal="backToMenu" from="WinScreen" to="." method="_on_win_screen_back_to_menu"]
 [connection signal="RoundSelectPressed" from="RoundSelect" to="." method="_on_round_select_round_select_pressed"]
